@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dynamo Sports | Gestão de pedidos</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+<!-- Estilos ficam separados para facilitar a manutenção visual. -->
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<!-- Tela de acesso ao painel de demonstração. -->
+<div class="entrada" id="telaLogin">
+  <form id="formAdmin" novalidate>
+    <h1>Entrar no painel</h1>
+    <p class="d">Área restrita à equipe da Dynamo Sports.</p>
+    <p class="erro" id="aErro" role="alert"></p>
+    <label class="campo">E-mail<input id="aEmail" type="email" autocomplete="username" required></label>
+    <label class="campo">Senha
+      <span class="senha"><input id="aSenha" type="password" autocomplete="current-password" required>
+      <button type="button" class="ver" id="ver" aria-label="Mostrar senha" aria-pressed="false">Mostrar</button></span>
+    </label>
+    <button class="btn" type="submit" id="entrar">Entrar</button>
+  </form>
+</div>
+
+<!-- Cabeçalho com ações disponíveis depois do login. -->
+<header class="topo" hidden>
+  <div><h1>Dynamo Sports · Gestão de pedidos</h1><p id="modoTxt">Painel interno da equipe</p></div>
+  <div><button class="btn btn--claro" id="sair">Sair</button> <button class="btn" id="novo">Novo pedido</button></div>
+</header>
+
+<!-- Conteúdo principal: indicadores, filtros e tabela de pedidos. -->
+<main hidden>
+  <section class="impacto" aria-label="Resumo das vendas">
+    <div><div class="impacto__num" id="horas">0 h</div><p class="impacto__txt">de esporte gratuito já financiadas pelos pedidos ativos</p></div>
+    <div class="nums">
+      <div><strong id="receita">R$ 0,00</strong><span>vendido</span></div>
+      <div><strong id="qtd">0</strong><span>pedidos ativos</span></div>
+      <div><strong id="ticket">R$ 0,00</strong><span>valor médio por pedido</span></div>
+    </div>
+  </section>
+
+  <div class="barra">
+    <h2>Pedidos</h2>
+    <div role="group" aria-label="Filtrar por situação" id="filtros"></div>
+    <label class="sr" for="busca">Buscar por cliente</label>
+    <input class="busca" id="busca" type="search" placeholder="Buscar cliente">
+    <button class="btn btn--claro btn--mini" id="csv">Baixar CSV</button>
+  </div>
+
+  <div class="tabela">
+    <table>
+      <caption class="sr">Lista de pedidos</caption>
+      <thead><tr><th>Nº</th><th>Cliente</th><th>Data</th><th>Itens</th><th class="n">Total</th><th>Situação</th><th><span class="sr">Ações</span></th></tr></thead>
+      <tbody id="corpo"></tbody>
+    </table>
+    <p class="vazio" id="vazio" hidden>Nenhum pedido encontrado. Mude o filtro ou crie um novo pedido.</p>
+  </div>
+</main>
+
+<!-- Janela modal usada para cadastrar um pedido e seus itens. -->
+<dialog id="dlg" aria-labelledby="dlgTitulo">
+  <h2 id="dlgTitulo">Novo pedido</h2>
+  <label class="campo">Cliente<select id="fCliente"></select></label>
+  <div class="linha">
+    <label class="campo">Produto<select id="fProduto"></select></label>
+    <label class="campo">Qtd.<input id="fQtd" type="number" min="1" max="20" value="1"></label>
+    <button class="btn btn--claro" id="addItem" style="margin-bottom:14px">Adicionar</button>
+  </div>
+  <ul class="rascunho" id="rascunho" aria-label="Itens do pedido"></ul>
+  <p><strong>Total: <span id="fTotal">R$ 0,00</span></strong></p>
+  <p class="erro" id="fErro" role="alert"></p>
+  <div class="acoes"><button class="btn btn--claro" id="cancelarDlg">Cancelar</button><button class="btn" id="salvar">Salvar pedido</button></div>
+</dialog>
+<div class="aviso" id="aviso" role="status"></div>
+
+<!-- Lógica da aplicação carregada em arquivo separado. -->
+<script src="js/app.js" defer></script>
+</body>
+</html>
